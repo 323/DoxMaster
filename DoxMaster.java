@@ -3,7 +3,7 @@ class DoxMaster {
     public static void main(String[] args) {
         String readme0 = "Welcome to Dox Master.";
         String readme1 = "Stop trying to decompile my program.";
-        String readme2 = "Coded by weebs.";
+        String readme2 = "Coded by 323.";
         HTTPRequest request = new HTTPRequest();
         Scanner name = new Scanner(System.in);
         String source; //String for storing page sources
