@@ -1,0 +1,21 @@
+#BlueJ class context
+comment0.params=
+comment0.target=Cookie()
+comment1.params=cookies
+comment1.target=Cookie(java.lang.String)
+comment2.params=cookies
+comment2.target=void\ setCookies(java.lang.String)
+comment3.params=cookie
+comment3.target=java.lang.String\ getCookie(java.lang.String)
+comment4.params=connection
+comment4.target=void\ updateCookies(java.net.URLConnection)
+comment5.params=cookie
+comment5.target=void\ removeCookie(java.lang.String)
+comment6.params=
+comment6.target=void\ clearCookies()
+comment7.params=array\ delimiter
+comment7.target=java.lang.String\ arrayListToString(java.util.List,\ java.lang.String)
+comment7.text=\r\n\ arrayListToString(List<String>\ array,\ String\ delimiter)\r\n\ \r\n\ Array\ to\ String\ function\ for\ internal\ use\ only.\r\n
+comment8.params=
+comment8.target=java.lang.String\ toString()
+numComments=9
