@@ -15,6 +15,7 @@ class DoxMaster {
         String source; //String for storing page sources
         String targetName; //Store target's name
         String formattedTargetName; //Store the URL-formatted target name
+        String formattedTargetNameWP; //Stores the WhitePages URL-formatted target name
         String username; //Store results of possible target usernames
         String facebookResults[]; //Store results of facebooks with the target's name
         String facebookAbouts[]; //Store "About" sections from facebookResults
@@ -23,12 +24,21 @@ class DoxMaster {
         String targetInterests[]; //Store high-frequency words from facebooks and twitters
         System.out.println("Enter the name of the person you'd like to dox.");
         targetName = name.nextLine();
-        System.out.println("Doxing your target...");
-        System.out.println("Checking Twitters with the name " + targetName);
-        formattedTargetName = targetName.replace( ' ', '+' );
+        formattedTargetName = targetName.replace( ' ', '+' ); //Formatted for Twitter/Facebook/etc
+        formattedTargetNameWP = targetName.replace( ' ', '-' ); //Formatted for WhitePages
+        System.out.println("[~] Doxing your target...");
+        System.out.println("[~] Checking Twitter for the name " + targetName);
         url = "https://twitter.com/search?q=" + formattedTargetName;
         source = SSLSocketClient(url);
-        System.out.println(source);
+        //Parse twitter results here
+        System.out.println("[~] Checking Facebook for the name " + targetName);
+        url = "https://www.facebook.com/search.php?q=" + formattedTargetName;
+        source = SSLSocketClient(url);
+        //Parse facebook results here
+        System.out.println("[~] Checking WhitePages for the name " + targetName);
+        request.setURL("http://www.whitepages.com/name/" + formattedTargetNameWP + "/");
+        source = request.get();
+        //Parse whitepages results here
     }
     public static String SSLSocketClient(String parameters) throws Exception {
         String endhtml = "</html>";
