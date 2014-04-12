@@ -30,7 +30,6 @@ class DoxMaster {
         source = SSLSocketClient(url);
         System.out.println(source);
     }
-<<<<<<< HEAD
     public static String SSLSocketClient(String parameters) throws Exception {
         String endhtml = "</html>";
         Boolean found;
@@ -69,6 +68,3 @@ class DoxMaster {
         return source;
     }
 }
-=======
-}
->>>>>>> 0be5af53735410182eb1363360a3318c5cf7a302
