@@ -24,18 +24,17 @@ class DoxMaster {
         System.out.println("Enter the name of the person you'd like to dox.");
         targetName = name.nextLine();
         System.out.println("Doxing your target...");
-        System.out.println("Checking Facebooks with the name " + targetName);
+        System.out.println("Checking Twitters with the name " + targetName);
         formattedTargetName = targetName.replace( ' ', '+' );
-        url = "https://www.facebook.com/search.php?q=" + formattedTargetName;
+        url = "https://twitter.com/search?q=" + formattedTargetName;
         source = SSLSocketClient(url);
         System.out.println(source);
     }
     public static String SSLSocketClient(String parameters) throws Exception {
         String endhtml = "</html>";
-        Boolean found;
+        Boolean found = false;
         String urlString = parameters;
         URL url = new URL(urlString);
-    
         Security.addProvider(
           new com.sun.net.ssl.internal.ssl.Provider());
     
@@ -58,11 +57,11 @@ class DoxMaster {
         String line;
         String source = "";
         
-        while (((line = in.readLine()) != null) && (found = false)) {
-              source += line;
-              found = source.contains(endhtml);
+        while (((line = in.readLine()) != null) && (found == false)){
+                  source += line;
+                  System.out.println(line);
+                  found = source.contains(endhtml);
         }
-        //System.out.println(source); //For testing
         out.close();
         in.close();
         return source;
