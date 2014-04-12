@@ -49,11 +49,20 @@ class DoxMaster {
             if (twitterResults > 2) {
                 for (int i=2; i <= twitterResults; i++) {
                     int j = i - 1;
-                    if (i == twitterResults) {
-                        twitterResultsData[i] = StringUtils.substringBetween(twitterResultsData[0], twitterResultsData[j], "</ol>");
+                    if (j == 1) {
+                        if (i == twitterResults) {
+                            twitterResultsData[i] = StringUtils.substringBetween(twitterResultsData[0], "</div></li>", "</ol>");
+                        } else {
+                            twitterResultsData[i] = StringUtils.substringBetween(twitterResultsData[0], "</div></li>", "</div></li>");
+                        }
                     } else {
-                        twitterResultsData[i] = StringUtils.substringBetween(twitterResultsData[0], twitterResultsData[j], profileMarker);
+                        if (i == twitterResults) {
+                            twitterResultsData[i] = StringUtils.substringBetween(twitterResultsData[0], twitterResultsData[j], "</ol>");
+                        } else {
+                            twitterResultsData[i] = StringUtils.substringBetween(twitterResultsData[0], twitterResultsData[j], "</div></li>");
+                        }
                     }
+                        
                     System.out.println(twitterResultsData[i]);
                 }
             } else {
@@ -101,7 +110,6 @@ class DoxMaster {
         
         while (((line = in.readLine()) != null) && (found == false)){
                   source += line;
-                  System.out.println(line);
                   found = source.contains(endhtml);
         }
         out.close();
