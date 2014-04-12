@@ -8,7 +8,7 @@ class DoxMaster {
     public static void main(String[] args) throws Exception {
         String readme0 = "Welcome to Dox Master.";
         String readme1 = "Stop trying to decompile my program.";
-        String readme2 = "Coded by weebs.";
+        String readme2 = "Coded by 323.";
         HTTPRequest request = new HTTPRequest();
         Scanner name = new Scanner(System.in);
         String url; //String for storing URLs
@@ -30,6 +30,7 @@ class DoxMaster {
         source = SSLSocketClient(url);
         System.out.println(source);
     }
+<<<<<<< HEAD
     public static String SSLSocketClient(String parameters) throws Exception {
         String endhtml = "</html>";
         Boolean found;
@@ -68,3 +69,6 @@ class DoxMaster {
         return source;
     }
 }
+=======
+}
+>>>>>>> 0be5af53735410182eb1363360a3318c5cf7a302
