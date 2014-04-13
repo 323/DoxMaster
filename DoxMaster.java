@@ -21,11 +21,15 @@ class DoxMaster {
         String username; //Store results of possible target usernames
         String facebookResultsData[]; //Store results of facebooks with the target's name
         String facebookAbouts[]; //Store "About" sections from facebookResults
-        String twitterResultsData[] = new String[200]; //Store results of twitters with the target's name
+        String twitterResultsData[] = new String[200]; //Store raw page source of target twitters
         int twitterResults; //Store the number of twitter results
-        String twitterBios[]; //Store "Bios" from twitterResults
+        String twitterUsernames[] = new String[200]; //Store usernames from twitter
+        String twitterFullNames[] = new String[200]; //Store full names from twitter
+        String twitterBios[] = new String[200]; //Store bios from twitter
+        String twitterLocations[] = new String[200]; //Store locations from twitter
+        String twitterWebsites[] = new String[200]; //Store websites from twitter
         String targetInterests[]; //Store high-frequency words from facebooks and twitters
-        System.out.println("Enter the name of the person you'd like to dox.");
+        System.out.println("[~] Enter the name of the person you'd like to dox:");
         targetName = name.nextLine();
         formattedTargetName = targetName.replace( ' ', '+' ); //Formatted for Twitter/Facebook/etc
         formattedTargetNameWP = targetName.replace( ' ', '-' ); //Formatted for WhitePages
@@ -43,9 +47,8 @@ class DoxMaster {
                 System.out.println("[+] " + twitterResults + " results were found when searching for " + targetName + " on Twitter.");
             }
             twitterResultsData[0] = StringUtils.substringBetween(source, "<ol class=\"stream-items", "<div class=\"stream-footer \">"); //Get section of source with profiles
-            twitterResultsData[1] = StringUtils.substringBetween(twitterResultsData[0], profileMarker, "</li>"); //Get first profile
-            System.out.println("/////////////////////////////////////////firstprofile////////////////////////////////////////////////////////////");
-            System.out.println(twitterResultsData[1]);
+            twitterResultsData[1] = StringUtils.substringBetween(twitterResultsData[0], profileMarker, "</div></li>"); //Get first profile
+            twitterUsernames[0] = StringUtils.substringBetween(twitterResultsData[1], "data-screen-name=\"", "\" data-user-id=");
             if (twitterResults > 2) {
                 for (int i=2; i <= twitterResults; i++) {
                     int j = i - 1;
@@ -59,17 +62,21 @@ class DoxMaster {
                         if (i == twitterResults) {
                             twitterResultsData[i] = StringUtils.substringBetween(twitterResultsData[0], twitterResultsData[j], "</ol>");
                         } else {
-                            twitterResultsData[i] = StringUtils.substringBetween(twitterResultsData[0], twitterResultsData[j], "</div></li>");
+                            twitterResultsData[i] = StringUtils.substringBetween(twitterResultsData[0], (twitterResultsData[j] + "</div></li>"), "</div></li>");
                         }
                     }
-                        
-                    System.out.println(twitterResultsData[i]);
+                    twitterUsernames[j] = StringUtils.substringBetween(twitterResultsData[i], "data-screen-name=\"", "\" data-user-id=");
                 }
             } else {
                 twitterResultsData[2] = StringUtils.substringBetween(twitterResultsData[0], twitterResultsData[1], "</ol>");
             }
         } else {
             System.out.println("[-] Sorry, no matches were found when searching for " + targetName + " on Twitter.");
+        }
+        System.out.println("[~] Scraping data from Twitter profiles...");
+        for (int i=0; i<twitterResults; i++) {
+            url = "https://twitter.com/" + twitterUsernames[i];
+            source = SSLSocketClient(url);
         }
         //Finished parsing twitter results
         System.out.println("[~] Checking Facebook for the name " + targetName);
