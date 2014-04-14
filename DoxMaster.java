@@ -7,11 +7,12 @@ import org.apache.commons.lang3.StringUtils;
 
 class DoxMaster {
     public static void main(String[] args) throws Exception {
-        String readme0 = "Welcome to Dox Master.";
+		String readme0 = "Welcome to Dox Master.";
         String readme1 = "Stop trying to decompile my program.";
         String readme2 = "Coded by 323.";
         HTTPRequest request = new HTTPRequest();
         Scanner name = new Scanner(System.in);
+		String fullsitestringtemp; //A temporary string for holding full <a> tags for twitter
         String profileMarker; //The string that marks the beginning of a new twitter pr
         String url; //String for storing URLs
         String source; //String for storing page sources
@@ -77,7 +78,15 @@ class DoxMaster {
         for (int i=0; i<twitterResults; i++) {
             url = "https://twitter.com/" + twitterUsernames[i];
             source = SSLSocketClient(url);
-        }
+			twitterFullNames[i] = StringUtils.substringBetween(source, "<h1 class=\"fullname editable-group\"> <span class=\"profile-field\">", "</span>");
+			if (twitterFullNames[i] == null) {
+				
+			}
+        	twitterBios[i] = StringUtils.substringBetween(source, "<p class=\"bio profile-field\">", "</p>");
+			twitterLocations[i] = StringUtils.substringBetween(source, "<span class=\"location profile-field\">", "</span>");
+			fullsitestringtemp = StringUtils.substringBetween(source, "<span class=\"profile-field\"><a", "/a>");
+			twitterWebsites[i] = StringUtils.substringBetween(fullsitestringtemp, ">", "<");
+		}
         //Finished parsing twitter results
         System.out.println("[~] Checking Facebook for the name " + targetName);
         url = "https://www.facebook.com/search.php?q=" + formattedTargetName;
@@ -93,31 +102,19 @@ class DoxMaster {
         Boolean found = false;
         String urlString = parameters;
         URL url = new URL(urlString);
-        Security.addProvider(
-          new com.sun.net.ssl.internal.ssl.Provider());
-    
-        SSLSocketFactory factory = 
-          (SSLSocketFactory)SSLSocketFactory.getDefault();
-        SSLSocket socket = 
-          (SSLSocket)factory.createSocket(url.getHost(), 443);
-    
-        PrintWriter out = new PrintWriter(
-            new OutputStreamWriter(
-              socket.getOutputStream()));
+        Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
+        SSLSocketFactory factory = (SSLSocketFactory)SSLSocketFactory.getDefault();
+        SSLSocket socket = (SSLSocket)factory.createSocket(url.getHost(), 443);
+        PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
         out.println("GET " + urlString + " HTTP/1.1");
         out.println();
         out.flush();
-    
-        BufferedReader in = new BufferedReader(
-          new InputStreamReader(
-          socket.getInputStream()));
-    
+        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         String line;
         String source = "";
-        
         while (((line = in.readLine()) != null) && (found == false)){
-                  source += line;
-                  found = source.contains(endhtml);
+            source += line;
+			found = source.contains(endhtml);
         }
         out.close();
         in.close();
