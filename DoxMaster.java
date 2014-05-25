@@ -80,7 +80,10 @@ class DoxMaster {
             source = SSLSocketClient(url);
 			twitterFullNames[i] = StringUtils.substringBetween(source, "<h1 class=\"fullname editable-group\"> <span class=\"profile-field\">", "</span>");
 			if (twitterFullNames[i] == null) {
-				
+				twitterFullNames[i] = StringUtils.substringBetween(source, "<a class=\"ProfileHeaderCard-nameLink u-textInheritColor js-nav \" href=\"/" + twitterUsernames[i] + "\">", "</a>");
+				twitterBios[i] = StringUtils.substringBetween(source, "<p class=\"ProfileHeaderCard-bio u-dir\" dir=\"ltr\">", "</p>");
+				twitterLocations[i] = StringUtils.substringBetween(source, "<span class=\"ProfileHeaderCard-locationText u-dir\" dir=\"ltr\">", "</span>");
+				twitterWebsites[i] = StringUtils.substringBetween(source, "<a class=\"u-textUserColor\" title=\"", "\" href=\"");
 			}
         	twitterBios[i] = StringUtils.substringBetween(source, "<p class=\"bio profile-field\">", "</p>");
 			twitterLocations[i] = StringUtils.substringBetween(source, "<span class=\"location profile-field\">", "</span>");
